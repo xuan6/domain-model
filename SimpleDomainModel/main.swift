@@ -151,14 +151,26 @@ open class Person {
 
   fileprivate var _job : Job? = nil
   open var job : Job? {
-    get { }
-    set(value) {
+    get{
+        if age >= 16{
+            var jobable : Job? = Job(title: "", type: Job.JobType.Hourly(0))
+        }
+        return jobable
     }
-  }
+    set(value){
+        
+
+    }
+    }
   
   fileprivate var _spouse : Person? = nil
   open var spouse : Person? {
-    get { }
+    get {
+        if age < 18{
+            var spouseable : Person? = nil
+        }
+        return spouseable
+    }
     set(value) {
     }
   }
