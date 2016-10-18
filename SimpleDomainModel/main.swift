@@ -200,9 +200,9 @@ open class Family {
     fileprivate var members : [Person] = []
     
     public init(spouse1: Person, spouse2: Person) {
-        members.append(spouse1)
+        members.append(spouse1) //add couple to famile array
         members.append(spouse2)
-        spouse1.spouse = spouse2
+        spouse1.spouse = spouse2 //assign spouse to each other
         spouse2.spouse = spouse1
     }
     
@@ -215,13 +215,13 @@ open class Family {
     open func householdIncome() -> Double {
         var total : Double = 0
         for member in members {
-            total = total + (member.job?.calculateIncome(2000))! //seems work hours equal to 2000?
+            if member.job != nil{ //BEAWARE: without if statement, code will crash
+                total = total + (member.job?.calculateIncome(2000))!//looks like work-hour is 2000 per year
+            }
         }
         return total
     }
 }
-
-
 
 
 
