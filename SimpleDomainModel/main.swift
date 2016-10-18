@@ -197,16 +197,28 @@ open class Person {
 // Family
 //
 open class Family {
-  fileprivate var members : [Person] = []
-  
-  public init(spouse1: Person, spouse2: Person) {
-  }
-  
-  open func haveChild(_ child: Person) -> Bool {
-  }
-  
-  open func householdIncome() -> Int {
-  }
+    fileprivate var members : [Person] = []
+    
+    public init(spouse1: Person, spouse2: Person) {
+        members.append(spouse1)
+        members.append(spouse2)
+        spouse1.spouse = spouse2
+        spouse2.spouse = spouse1
+    }
+    
+    open func haveChild(_ child: Person) -> Bool {
+        child.age = 0
+        members.append(child)
+        return true
+    }
+    
+    open func householdIncome() -> Double {
+        var total : Double = 0
+        for member in members {
+            total = total + (member.job?.calculateIncome(2000))! //seems work hours equal to 2000?
+        }
+        return total
+    }
 }
 
 
