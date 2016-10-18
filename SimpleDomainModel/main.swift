@@ -144,39 +144,6 @@ open class Job {
 ////////////////////////////////////
 // Person
 //
-open class Job {
-    fileprivate var title : String
-    fileprivate var type : JobType
-    
-    public enum JobType {
-        case Hourly(Double)
-        case Salary(Int)
-    }
-    
-    public init(title : String, type : JobType) {
-        self.title = title
-        self.type = type
-    }
-    
-    open func calculateIncome(_ hours: Int) -> Double {
-        switch type {
-        case .Hourly(let hourly): //access associate values in enum
-            return Double(hours)*hourly //convert hours to Double data type to enable calculation
-        case .Salary(let salary):
-            return Double(salary) //no need to use 'default' because it has iterated all cases
-        }
-    }
-    
-    open func raise(_ amt : Double) {
-        switch type {
-        case .Hourly(var hourly):
-            hourly = hourly + amt
-        case .Salary(var salary):
-            salary = salary + Int(amt)
-        }
-        
-    }
-}
 
 open class Person {
     open var firstName : String = ""
@@ -221,10 +188,10 @@ open class Person {
         }
     }
     
-    
     open func toString() -> String {
-        return String(self)
+        return "Person: firstname:\(firstName) lastname:\(lastName) age:\(age) job:\(job) spouse:\(spouse)"
     }
+
 }
 ////////////////////////////////////
 // Family
