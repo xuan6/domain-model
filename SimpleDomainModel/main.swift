@@ -144,47 +144,88 @@ open class Job {
 ////////////////////////////////////
 // Person
 //
-open class Person {
-  open var firstName : String = ""
-  open var lastName : String = ""
-  open var age : Int = 0
-
-  fileprivate var _job : Job? = nil
-  open var job : Job? {
-    get{
-        if age >= 16{
-            var jobable : Job? = Job(title: "", type: Job.JobType.Hourly(0))
-        }
-        return jobable
+open class Job {
+    fileprivate var title : String
+    fileprivate var type : JobType
+    
+    public enum JobType {
+        case Hourly(Double)
+        case Salary(Int)
     }
-    set(value){
+    
+    public init(title : String, type : JobType) {
+        self.title = title
+        self.type = type
+    }
+    
+    open func calculateIncome(_ hours: Int) -> Double {
+        switch type {
+        case .Hourly(let hourly): //access associate values in enum
+            return Double(hours)*hourly //convert hours to Double data type to enable calculation
+        case .Salary(let salary):
+            return Double(salary) //no need to use 'default' because it has iterated all cases
+        }
+    }
+    
+    open func raise(_ amt : Double) {
+        switch type {
+        case .Hourly(var hourly):
+            hourly = hourly + amt
+        case .Salary(var salary):
+            salary = salary + Int(amt)
+        }
         
-
     }
-    }
-  
-  fileprivate var _spouse : Person? = nil
-  open var spouse : Person? {
-    get {
-        if age < 18{
-            var spouseable : Person? = nil
-        }
-        return spouseable
-    }
-    set(value) {
-    }
-  }
-  
-  public init(firstName : String, lastName: String, age : Int) {
-    self.firstName = firstName
-    self.lastName = lastName
-    self.age = age
-  }
-  
-  open func toString() -> String {
-  }
 }
 
+open class Person {
+    open var firstName : String = ""
+    open var lastName : String = ""
+    open var age : Int = 0
+    
+    fileprivate var _job : Job? = nil
+    
+    open var job : Job? {
+        get {
+            return _job //default job-able is false, so return nil
+        }
+        set (newValue){
+            if age >= 16{
+                _job = newValue //when older than 16, enable setting of job
+                
+            }else{
+                print("Only 16+ yrs old people can has a job.")  //otherwhise job is still nil
+            }
+        }
+    }
+    
+    
+    public init(firstName : String, lastName: String, age : Int) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.age = age
+    }
+    
+    fileprivate var _spouse : Person? = nil
+    
+    open var spouse : Person? {
+        get {
+            return _spouse //default spouse-able is false, so return nil
+        }
+        set(newValue){
+            if age >= 20{
+                _spouse = newValue //when older than 20, enable setting of spouse
+            }else{
+                print("Only 20+ yrs old people can has a job.") //otherwhise spouse is still nil
+            }
+        }
+    }
+    
+    
+    open func toString() -> String {
+        return String(self)
+    }
+}
 ////////////////////////////////////
 // Family
 //
