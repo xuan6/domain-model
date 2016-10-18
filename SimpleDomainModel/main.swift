@@ -136,8 +136,10 @@ open class Job {
         switch type {
         case .Hourly(var hourly):
             hourly = hourly + amt
+            type = Job.JobType.Hourly(hourly) //update the jobtype's (associate) value, BEAWARE without this update, will crash; cannot just update the associate value by 'hourly = hourly + amt'
         case .Salary(var salary):
             salary = salary + Int(amt)
+            type = Job.JobType.Salary(salary)
         }
     }
 }
